@@ -1,0 +1,2 @@
+# WGC
+Web graph compression.
