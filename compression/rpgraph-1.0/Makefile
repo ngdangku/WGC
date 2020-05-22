@@ -25,7 +25,7 @@ compressDictionary: $(OBJECTS)
 	@echo "[LNK] Linking compressDictionary"
 	@$(CPP) $(CPPFLAGS) -o compressDictionary compressDictionary.cpp $(OBJECTS)
 
-use: $(EOBJECTS)
+use: $(EOBJECTS) use.cpp
 	@echo "[LNK] Linking use"
 	@$(CPP) $(CPPFLAGS) -o use use.cpp $(EOBJECTS)
 	
