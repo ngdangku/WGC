@@ -1,8 +1,27 @@
+""" AM.py
+Copyright (C) 2020, Dengke Wu
+
+Load and visualise the AM of datasets
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+"""
 import os
 
-import numpy as np
 import matplotlib.pyplot as plt
-import networkx as nx
+import numpy as np
 
 
 def parse_binary(binary_data):
@@ -30,66 +49,64 @@ def parse_binary(binary_data):
     nodes = read()
     edges = read(type="long")
     graph = [[] for _ in range(nodes + 1)]
-    print(nodes, edges)
-    # graph = {}
+    print("nodes:{}, edges:{}".format(nodes, edges))
 
     integer_sequence = read_all()
-    print(integer_sequence[:10])
 
     cur_node = 0
     for i in integer_sequence:
         if i < 0:
             cur_node = i
-            # graph[-cur_node] = []
         elif cur_node < 0:
             graph[-cur_node].append(i)
 
     return graph
 
 
-def load_datasets():
-    dataset_names = ["cnr-2000", "eu-2005"]
-    dir = "../"
-
-    datasets = []
-
-    for name in dataset_names[:1]:
-        path = os.path.join(dir, name)
-        with open(path, "rb") as f:
-            binary_data = f.read()
-            parsed = parse_binary(binary_data)
-            datasets.append(parsed)
-
-    return datasets, dataset_names
-
-
-datasets, dataset_names = load_datasets()
-
-
 def visualise_dataset(AL, name):
     print("start visualising...")
-    fig = plt.figure(figsize=(8,8))
+    fig = plt.figure()
+
+    f, ax = plt.subplots(1)
+
+    ax.set_aspect("equal")
 
     n = len(AL)
     x_list = []
     y_list = []
     for u, lis in enumerate(AL):
         d = len(lis)
-        x_list.extend([u]*d)
+        x_list.extend([u] * d)
         y_list.extend(lis)
-
-    # plt.xlim(1,n)
-    # plt.ylim(1,n)
 
     x = np.array(x_list)
     y = np.array(y_list)
-    plt.scatter(x,y,1,c="grey")
+    plt.scatter(x, y, 1, c="grey")
 
     print("outputing...")
+
+    plt.xticks([1, n])
+    plt.yticks([1, n])
+
+    plt.title("{}".format(name))
+    plt.xlabel("to")
+    plt.ylabel("from")
 
     plt.savefig("{}.am.png".format(name), dpi=300)
 
 
-for data, dataset_name in zip(datasets, dataset_names):
-    visualise_dataset(data, dataset_name)
-    break
+def main():
+    dataset_names = ["cnr-2000", "eu-2005"]
+    dir = "../"
+
+    for name in dataset_names:
+        path = os.path.join(dir, name)
+        print("loading {}...".format(name))
+        with open(path, "rb") as f:
+            binary_data = f.read()
+            parsed = parse_binary(binary_data)
+        visualise_dataset(parsed, name)
+
+
+if __name__ == '__main__':
+    main()
