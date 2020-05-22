@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
 
-from webgraph_dataset import WebGraphDatasetManager
+from .webgraph_dataset import WebGraphDatasetManager
 
 logging.basicConfig(level=logging.INFO)
 
@@ -36,7 +36,6 @@ def main():
     ]
     manager = WebGraphDatasetManager(dataset_names)
     manager.download_all_datasets()
-    manager.convert_all_datasets()
 
 
 if __name__ == '__main__':

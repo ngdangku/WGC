@@ -96,8 +96,8 @@ def visualise_dataset(AL, name):
 
 
 def main():
-    dataset_names = ["cnr-2000", "eu-2005"]
-    dir = "../"
+    dataset_names = ["cnr-2000", "eu-2005","in-2004","uk-2007-05@1000000"]
+    dir = "webgraph_datasets"
 
     for name in dataset_names:
         path = os.path.join(dir, name)

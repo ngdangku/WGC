@@ -34,9 +34,11 @@ BASE_URL = "http://data.law.di.unimi.it/webdata/"
 
 
 class WebGraphDataset:
-    def __init__(self, name, base_dir, extensions=EXTENSIONS, base_url=BASE_URL):
+    def __init__(self, name, base_dir, extensions=None, base_url=BASE_URL):
         self.base_dir = base_dir
         self.extensions = extensions
+        if self.extensions is None:
+            self.extensions = EXTENSIONS.copy()
         self.name = name
         self.url_template = base_url + "{name}/{file_name}"
 
@@ -84,9 +86,9 @@ class WebGraphDataset:
                 f.write(r.content)
             logging.info("save to {path}".format(path=os.path.abspath(path)))
 
-    def convert(self):
-
-        return True
+    # def convert(self):
+    #
+    #     return True
 
 
 class WebGraphDatasetManager:
@@ -110,12 +112,12 @@ class WebGraphDatasetManager:
         return self
 
     # convert all downloaded datasets to uncompressed binary form
-    def convert_all_datasets(self):
-        logging.info("converting...")
-        # i = int.from_bytes(b'\x00\x0F', byteorder="little", signed=True)
-        results = ["Failed", "OK"]
-        for dataset in self.datasets:
-            is_ok = dataset.convert()
-            logging.info("{dataset_name}: {result_str}".format(dataset_name=dataset.name, result_str=results[is_ok]))
-
-        logging.info("converted.")
+    # def convert_all_datasets(self):
+    #     logging.info("converting...")
+    #     # i = int.from_bytes(b'\x00\x0F', byteorder="little", signed=True)
+    #     results = ["Failed", "OK"]
+    #     for dataset in self.datasets:
+    #         is_ok = dataset.convert()
+    #         logging.info("{dataset_name}: {result_str}".format(dataset_name=dataset.name, result_str=results[is_ok]))
+    #
+    #     logging.info("converted.")

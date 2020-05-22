@@ -2,19 +2,26 @@ py=python
 
 dep=$(CURDIR)/dependencies
 datasets=$(CURDIR)/webgraph_datasets
+utilities=$(CURDIR)/utilities
 
-all: Transform.class
+all: download convert
 
-Transform.class: Transform.java
-	javac -cp "$(dep)/*" Transform.java
+Transform.class: utilities
+	javac -cp "$(dep)/*" $(utilities)/Transform.java
 
-download: Transform.class
-	$(py) download_dataset.py
+download:
+	$(py) -m utilities.download_dataset
+visualise:
+	$(py) -m visualisation.AM
 
+.ONESHELL:
 convert: Transform.class
 	#Warning: remove comment and execute following commands
-	java -cp "$(dep)/*:." Transform $(datasets)/eu-2005 > eu-2005
-	java -cp "$(dep)/*:." Transform $(datasets)/cnr-2000 > cnr-2000
+	cd $(utilities)
+	java -cp "$(dep)/*:." Transform $(datasets)/eu-2005  > $(datasets)/eu-2005
+	java -cp "$(dep)/*:." Transform $(datasets)/cnr-2000 > $(datasets)/cnr-2000
+	java -cp "$(dep)/*:." Transform $(datasets)/in-2004  > $(datasets)/in-2004
+	java -cp "$(dep)/*:." Transform $(datasets)/uk-2007-05@1000000 > $(datasets)/uk-2007-05@1000000
 
 clean:
 	rm Transform.class
