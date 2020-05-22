@@ -4,6 +4,7 @@ dep=$(CURDIR)/dependencies
 datasets=$(CURDIR)/webgraph_datasets
 utilities=$(CURDIR)/utilities
 compression=$(CURDIR)/compression
+experiments=$(CURDIR)/experiments
 
 lz=$(compression)/lzgraph-1.0
 rp=$(compression)/rpgraph-1.0
@@ -49,6 +50,25 @@ test_rp:
 #	$(py) compressGraph.py $(datasets)/uk-2007-05@1000000 20298783 1000000
 #	$(rp)/use $(datasets)/uk-2007-05@1000000 sequence
 #	$(rp)/use $(datasets)/uk-2007-05@1000000 random
+
+test_webgraph:
+
+#No compression
+	java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.BVGraph -m 0 -w 0 -i 0 -r 0 $(datasets)/eu-2005 $(experiments)/eu-2005-none 2>&1 | tee $(experiments)/eu-2005-none.stats && \
+java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.test.SpeedTest -g BVGraph $(experiments)/eu-2005-none 2>&1 | tee $(experiments)/eu-2005-none.seqspeedtest && \
+java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.test.SpeedTest -g BVGraph -r 10000 $(experiments)/eu-2005-none 2>&1 | tee $(experiments)/eu-2005-none.randspeedtest
+
+	java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.BVGraph -m 0 -w 0 -i 0 -r 0 $(datasets)/cnr-2000 $(experiments)/cnr-2000-none 2>&1 | tee $(experiments)/cnr-2000-none.stats && \
+java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.test.SpeedTest -g BVGraph $(experiments)/cnr-2000-none 2>&1 | tee $(experiments)/cnr-2000-none.seqspeedtest && \
+java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.test.SpeedTest -g BVGraph -r 10000 $(experiments)/cnr-2000-none 2>&1 | tee $(experiments)/cnr-2000-none.randspeedtest
+
+	java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.BVGraph -m 0 -w 0 -i 0 -r 0 $(datasets)/in-2004 $(experiments)/in-2004-none 2>&1 | tee $(experiments)/in-2004-none.stats && \
+java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.test.SpeedTest -g BVGraph $(experiments)/in-2004-none 2>&1 | tee $(experiments)/in-2004-none.seqspeedtest && \
+java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.test.SpeedTest -g BVGraph -r 10000 $(experiments)/in-2004-none 2>&1 | tee $(experiments)/in-2004-none.randspeedtest
+
+	java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.BVGraph -m 0 -w 0 -i 0 -r 0 $(datasets)/uk-2007-05@1000000 $(experiments)/uk-2007-05@1000000-none 2>&1 | tee $(experiments)/uk-2007-05@1000000-none.stats && \
+java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.test.SpeedTest -g BVGraph $(experiments)/uk-2007-05@1000000-none 2>&1 | tee $(experiments)/uk-2007-05@1000000-none.seqspeedtest && \
+java -Xss64M -cp "$(dep)/*:." it.unimi.dsi.webgraph.test.SpeedTest -g BVGraph -r 10000 $(experiments)/uk-2007-05@1000000-none 2>&1 | tee $(experiments)/uk-2007-05@1000000-none.randspeedtest
 
 download:
 	$(py) -m utilities.download_dataset
