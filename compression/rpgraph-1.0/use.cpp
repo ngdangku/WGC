@@ -29,7 +29,7 @@
 
 using namespace std;
 
-const int TIMES = 5000000;
+const int TIMES = 100000;
 
 int random_access_test(RepairGraph *g){
     if(g == nullptr) return 1;
