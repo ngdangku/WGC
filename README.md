@@ -56,6 +56,10 @@ Run `make test_webgraph` under `./`.
 
 The output will be also in `./experiments`.
 
+## k2-tree
+
+The k2-tree is implemented in `./compression/k2tree`, but no experiment is conducted.
+
 # Visualisation
 
 This pipeline also contains a script for visualisation the adjacency matrix of web graphs.
