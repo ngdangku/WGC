@@ -1,7 +1,7 @@
 # WGC
 A benchmark pipeline of web graph compression algorithms.
 
-All of these experiments are conducted under Linux (Deepin 15.11).
+All of these experiments are conducted under Linux (@Deepin 15.11).
 
 # Requirements
 
@@ -18,11 +18,27 @@ Note that options could be modified in `./utilities/download_dataset.py`, to dow
 
 ## Conversion
 
-To run experiments of LZ78 and Re-Pair, you need to convert the datasets file from BVGraph to plain binary format first.
+To run experiments of LZ78 and Re-Pair and the visualisation script, you need to convert the datasets file from BVGraph to plain binary format first.
 
 Compile the java code by running `make convert`, and the outputs will also be `./webgraph_datasets`.
 
-The `./utilities/Transform.py` is modified by me, and the original conversion code is obtained from [?].
+The `./utilities/Transform.py` is modified by me, and the original conversion code is obtained from https://webgraphs.recoded.cl/.
+
+# Visualisation
+
+This pipeline also contains a script for visualisation the adjacency matrix of web graphs.
+
+Run `python -m visualisation.AM` under `./`.
+
+## Results
+
+![cnr-2000](./visualisation/cnr-2000.am.png)
+
+![eu-2005](./visualisation/eu-2005.am.png)
+
+![in-2004](./visualisation/in-2004.am.png)
+
+![uk-2007-05@1000000](./visualisation/uk-2007-05@1000000.am.png)
 
 # Experiments
 
@@ -60,8 +76,5 @@ The output will be also in `./experiments`.
 
 The k2-tree is implemented in `./compression/k2tree`, but no experiment is conducted.
 
-# Visualisation
 
-This pipeline also contains a script for visualisation the adjacency matrix of web graphs.
 
-Run `python -m visualisation.AM` under `./`.
